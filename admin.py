@@ -118,8 +118,8 @@ class Admin(Connection):
 
 if __name__ == '__main__':
     admin1 = Admin('admin', 'admin')
-    # orders = admin1.get_order_info()
-    # print(orders)
+    orders = admin1.get_order_info()
+    print(orders)
     # ----------------------------------
     # data = [{
     #         'category_name': "Coca"

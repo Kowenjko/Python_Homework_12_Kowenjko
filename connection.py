@@ -29,10 +29,12 @@ class Connection():
         else:
             return True
 
-    def _connectDb(self, login, password):
+    def _connectDb(self, login, password, role='admin'):
         connection, cursor = self._openDB()
         table = 'login'
-        connect_query = f"""SELECT * FROM {table} where login='{login}' and "password"='{password}';"""
+
+        connect_query = f"""SELECT * FROM {table} where login='{login}' and "password"='{password}' and role='{role}' or
+                                                        login='{login}' and "password"='{password}' and role='admin' ;"""
         cursor.execute(connect_query)
         connection.commit()
         result = cursor.fetchall()

@@ -6,16 +6,22 @@ from connection import Connection
 class UnregisteredCuctomer(Connection):
 
     def register(self, data):
-        table = 'customer'
-        result = self._postData(table, data)
-        return result
+        if self._connectDb(self.login, self.password):
+            table = 'customer'
+            result = self._postData(table, data)
+            return result
+        else:
+            return 'Incorrect login or password'
 
     def get_product_info(self):
-        table = ('product_category',)
-        fields = ('*',)
-        selector = ''
-        result = self._getData(table, fields, selector)
-        return result
+        if self._connectDb(self.login, self.password):
+            table = ('product_category',)
+            fields = ('*',)
+            selector = ''
+            result = self._getData(table, fields, selector)
+            return result
+        else:
+            return 'Incorrect login or password'
 
 
 if __name__ == '__main__':

@@ -14,22 +14,20 @@ class Employee(Connection):
         self.login = login
         self.password = password
 
-    def edit_self_info(self):
-        if self._connectDb(self.login, self.password):
-            table = ('employee',)
-            fields = ('*',)
-            selector = ''
-            result = self._getData(table, fields, selector)
+    def edit_self_info(self, data, selector):
+        role = 'employee'
+        if self._connectDb(self.login, self.password, role):
+            table = 'employee'
+            result = self._updateData(table, data, selector)
             return result
         else:
             return 'Incorrect login or password'
 
-    def change_order_status(self):
-        if self._connectDb(self.login, self.password):
+    def change_order_status(self, data, selector):
+        role = 'employee'
+        if self._connectDb(self.login, self.password, role):
             table = ('orders',)
-            fields = ('*',)
-            selector = ''
-            result = self._getData(table, fields, selector)
+            result = self._updateData(table, data, selector)
             return result
         else:
             return 'Incorrect login or password'
@@ -37,9 +35,4 @@ class Employee(Connection):
 
 if __name__ == '__main__':
     employee = Employee('roma', 'romanich', '1953-02-03',
-                        'London', 'Lok', 'admin', 'admin')
-    # orders = employee.edit_self_info()
-    # print(orders)
-    # ------------------------------------
-    orders = employee.change_order_status()
-    print(orders)
+                        'London', 'Lok', 'roman', '1234')

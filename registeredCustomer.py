@@ -3,7 +3,7 @@ from settings import *
 from connection import Connection
 
 
-class registeredCustomer(Connection):
+class RegisteredCustomer(Connection):
 
     def __init__(self, first_name, last_name, city, email, password):
         self.first_name = first_name
@@ -13,7 +13,8 @@ class registeredCustomer(Connection):
         self.password = password
 
     def get_self_info(self, selector=''):
-        if self._connectDb(self.login, self.password):
+        role = 'customer'
+        if self._connectDb(self.login, self.password, role):
             table = ('customer',)
             fields = ('*',)
             selector = ''
@@ -23,7 +24,8 @@ class registeredCustomer(Connection):
             return 'Incorrect login or password'
 
     def create_order(self, data):
-        if self._connectDb(self.login, self.password):
+        role = 'customer'
+        if self._connectDb(self.login, self.password, role):
             table = 'orders'
             result = self._postData(table, data)
             return result
@@ -31,7 +33,8 @@ class registeredCustomer(Connection):
             return 'Incorrect login or password'
 
     def delete_order(self, selector):
-        if self._connectDb(self.login, self.password):
+        role = 'customer'
+        if self._connectDb(self.login, self.password, role):
             table = 'orders'
             selector = f"date_of_order = '{selector}'"
             result = self._deleteData(table,  selector)
@@ -40,7 +43,8 @@ class registeredCustomer(Connection):
             return 'Incorrect login or password'
 
     def get_product_info(self):
-        if self._connectDb(self.login, self.password):
+        role = 'customer'
+        if self._connectDb(self.login, self.password, role):
             table = ('product',)
             fields = ('*',)
             selector = ''
@@ -51,8 +55,8 @@ class registeredCustomer(Connection):
 
 
 if __name__ == '__main__':
-    cust = registeredCustomer('roma', 'romanich',
-                              'London', 'admin', 'admin')
+    cust = RegisteredCustomer('roma', 'romanich',
+                              'London', 'roman', '1234')
     # -------------------------------
     # data = [{
     #         'employee_id': 1,
@@ -68,8 +72,8 @@ if __name__ == '__main__':
     # orders = cust.get_product_info()
     # print(orders)
     # -------------------------------
-    # orders = cust.get_order_info()
-    # print(orders)
+    orders = cust.get_self_info()
+    print(orders)
     # -------------------------------
     # idf = cust._getNextId('orders')
     # print(idf)
