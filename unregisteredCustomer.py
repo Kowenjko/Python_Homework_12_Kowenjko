@@ -5,23 +5,22 @@ from connection import Connection
 
 class UnregisteredCuctomer(Connection):
 
-    def register(self, data):
-        if self._connectDb(self.login, self.password):
-            table = 'customer'
+    def register(self, data, data_2):
+        table = 'login'
+        table_2 = 'customer'
+        if self._auditDb(table, list(data[0].values())[0]):
             result = self._postData(table, data)
-            return result
+            result_2 = self._postData(table_2, data_2)
+            return result+result_2
         else:
-            return 'Incorrect login or password'
+            return 'A user with this login already exists'
 
     def get_product_info(self):
-        if self._connectDb(self.login, self.password):
-            table = ('product_category',)
-            fields = ('*',)
-            selector = ''
-            result = self._getData(table, fields, selector)
-            return result
-        else:
-            return 'Incorrect login or password'
+        table = ('product_category',)
+        fields = ('*',)
+        selector = ''
+        result = self._getData(table, fields, selector)
+        return result
 
 
 if __name__ == '__main__':
@@ -30,10 +29,14 @@ if __name__ == '__main__':
     # print(orders)
     # ----------------------------------
     # data = [{
-    #         'city_id': 2,
-    #         'first_name': "Loman",
-    #         'last_name': "Mipol"
-
+    #         'login': "Loman",
+    #         'password': "Mipol",
+    #         'role': "customer"
     #         }]
-    # put = regCust.register(data)
+    # data_2 = [{
+    #     'city_id': 2,
+    #     'first_name': "Loman",
+    #     'last_name': "Mipol"
+    # }]
+    # put = regCust.register(data, data_2)
     # print(put)

@@ -117,7 +117,7 @@ class Admin(Connection):
 
 
 if __name__ == '__main__':
-    admin1 = Admin('admin', 'admin')
+    admin1 = Admin('roman', '1234')
     orders = admin1.get_order_info()
     print(orders)
     # ----------------------------------
